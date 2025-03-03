@@ -3,8 +3,8 @@ const nextConfig = {
   // Change from 'standalone' to 'export' for static hosting
   output: 'export',
   
-  // Add basePath for GitHub Pages - uncomment and replace with your repo name when deploying to GitHub Pages
-  // basePath: '/template-2',
+  // Add basePath for GitHub Pages - uncomment when deploying to GitHub Pages
+  basePath: '/business-expense-tracker',
   
   // Disable React StrictMode in development to avoid double renders
   reactStrictMode: false,
