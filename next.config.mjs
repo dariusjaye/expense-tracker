@@ -46,6 +46,11 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+
+  // Configure static generation
+  env: {
+    NEXT_PUBLIC_BASE_PATH: '/expense-tracker',
+  },
 };
 
 export default nextConfig;

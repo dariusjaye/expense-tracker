@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { getBaseUrl } from '@/lib/utils/urlUtils';
 
 export default function NotFound() {
   const router = useRouter();
@@ -9,7 +10,7 @@ export default function NotFound() {
   useEffect(() => {
     // Redirect to home page after a short delay
     const timeout = setTimeout(() => {
-      router.push('/');
+      router.push(getBaseUrl('/'));
     }, 3000);
 
     return () => clearTimeout(timeout);
