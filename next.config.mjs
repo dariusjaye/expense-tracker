@@ -4,7 +4,7 @@ const nextConfig = {
   output: 'export',
   
   // Add basePath for GitHub Pages - uncomment when deploying to GitHub Pages
-  basePath: '/business-expense-tracker',
+  basePath: '/expense-tracker',
   
   // Disable React StrictMode in development to avoid double renders
   reactStrictMode: false,
