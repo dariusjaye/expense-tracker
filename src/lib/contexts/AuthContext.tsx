@@ -1,59 +1,87 @@
 "use client";
 
-import React, { createContext, useEffect, useState } from "react";
-import { signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut } from "firebase/auth";
-import { User } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { createContext, useEffect, useState, ReactNode } from 'react';
+import { auth } from '../firebase/firebase';
+import { onAuthStateChanged, signOut as firebaseSignOut, signInAnonymously } from 'firebase/auth';
 
-interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-  signInWithGoogle: () => Promise<void>;
-  signOut: () => Promise<void>;
+// Define a simple user type without Firebase dependencies
+interface SimpleUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
 }
 
-const AuthContext = createContext<AuthContextType>({
+interface AuthContextType {
+  user: SimpleUser | null;
+  loading: boolean;
+  signOut: () => void;
+  signInWithPin: (pin: string) => Promise<boolean>;
+}
+
+// Create the context with default values
+export const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
-  signInWithGoogle: async () => {},
-  signOut: async () => {},
+  signOut: () => {},
+  signInWithPin: async () => false,
 });
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState<SimpleUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
+    // Set up Firebase auth state listener
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        // Convert Firebase user to SimpleUser
+        const simpleUser: SimpleUser = {
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
+        };
+        setUser(simpleUser);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
 
+    // Clean up subscription
     return () => unsubscribe();
   }, []);
 
-  const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Error signing in with Google", error);
+  const signInWithPin = async (pin: string): Promise<boolean> => {
+    if (pin === '1996') {
+      try {
+        // Use anonymous authentication with Firebase
+        const userCredential = await signInAnonymously(auth);
+        return true;
+      } catch (error) {
+        console.error('Error signing in anonymously:', error);
+        return false;
+      }
     }
+    return false;
   };
 
-  const signOutUser = async () => {
+  const signOut = async () => {
     try {
       await firebaseSignOut(auth);
     } catch (error) {
-      console.error("Error signing out", error);
+      console.error('Error signing out:', error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signOut: signOutUser }}>
+    <AuthContext.Provider value={{ user, loading, signOut, signInWithPin }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
-export { AuthContext };

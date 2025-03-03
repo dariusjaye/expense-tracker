@@ -48,7 +48,19 @@ export const deleteDocument = (collectionName: string, id: string) =>
 
 // Storage functions
 export const uploadFile = async (file: File, path: string) => {
-  const storageRef = ref(storage, path);
-  await uploadBytes(storageRef, file);
-  return getDownloadURL(storageRef);
+  try {
+    // Create a reference to the file location in Firebase Storage
+    const storageRef = ref(storage, path);
+    
+    // Upload the file to Firebase Storage
+    const snapshot = await uploadBytes(storageRef, file);
+    
+    // Get the download URL for the file
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    
+    return downloadURL;
+  } catch (error) {
+    console.error('Error uploading file to Firebase Storage:', error);
+    throw error;
+  }
 };
