@@ -7,6 +7,17 @@ import Image from 'next/image';
 // Add dynamic export configuration
 export const dynamic = 'force-dynamic';
 
+// Add generateStaticParams for static export
+export async function generateStaticParams() {
+  // Since this is a mobile upload page that needs to handle any user ID,
+  // we'll generate a few example paths and handle the rest on the client
+  return [
+    { userId: 'example1' },
+    { userId: 'example2' },
+    { userId: 'example3' },
+  ];
+}
+
 export default function MobileUploadPage() {
   const params = useParams();
   const userId = params.userId as string;
