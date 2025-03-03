@@ -2,6 +2,11 @@
 
 A comprehensive web application for tracking and managing business expenses with OCR receipt scanning capabilities.
 
+## Live Demo
+
+Check out the live demo of the application:
+[https://dariusjaye.github.io/expense-tracker/](https://dariusjaye.github.io/expense-tracker/)
+
 ## Features
 
 - **User Authentication**: Secure login with Firebase Authentication
@@ -124,3 +129,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Veryfi](https://www.veryfi.com/)
 - [Chart.js](https://www.chartjs.org/)
+
+## Deployment
+
+### GitHub Pages
+
+This project is configured for deployment to GitHub Pages. The deployment is automated using GitHub Actions.
+
+For more information about the GitHub Pages deployment, see [GITHUB_PAGES.md](GITHUB_PAGES.md).
+
+### Firebase Hosting
+
+This project can also be deployed to Firebase Hosting. For instructions, see [FIREBASE_HOSTING.md](FIREBASE_HOSTING.md).
