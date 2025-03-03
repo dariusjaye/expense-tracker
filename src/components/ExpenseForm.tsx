@@ -30,9 +30,19 @@ export default function ExpenseForm({
   const [receiptUrl, setReceiptUrl] = useState<string>('');
   const [tax, setTax] = useState<number>(0);
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
-  const [recurringFrequency, setRecurringFrequency] = useState<string>('');
+  const [recurringFrequency, setRecurringFrequency] = useState<'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'quarterly' | 'annually' | ''>('');
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState<string>('');
+
+  // Recurring frequency options
+  const frequencies: Array<'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'quarterly' | 'annually'> = [
+    'daily',
+    'weekly',
+    'bi-weekly',
+    'monthly',
+    'quarterly',
+    'annually'
+  ];
 
   // Initialize form with initial data if provided
   useEffect(() => {
@@ -116,9 +126,10 @@ export default function ExpenseForm({
       receiptUrl: receiptUrl || '',
       tax: tax || 0,
       isRecurring: isRecurring || false,
-      recurringFrequency: isRecurring ? recurringFrequency : undefined,
+      recurringFrequency: isRecurring && recurringFrequency ? recurringFrequency : undefined,
       tags: tags || [],
       items: initialData?.items || [],
+      currency: 'USD', // Default to USD
     };
     
     onSave(expenseData);
@@ -146,16 +157,6 @@ export default function ExpenseForm({
     'Check',
     'PayPal',
     'Other'
-  ];
-
-  // Recurring frequency options
-  const frequencies = [
-    'Daily',
-    'Weekly',
-    'Bi-weekly',
-    'Monthly',
-    'Quarterly',
-    'Annually'
   ];
 
   return (
@@ -332,13 +333,13 @@ export default function ExpenseForm({
             <select
               id="recurringFrequency"
               value={recurringFrequency}
-              onChange={(e) => setRecurringFrequency(e.target.value)}
+              onChange={(e) => setRecurringFrequency(e.target.value as 'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'quarterly' | 'annually' | '')}
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             >
               <option value="">Select frequency</option>
               {frequencies.map((freq) => (
                 <option key={freq} value={freq}>
-                  {freq}
+                  {freq.charAt(0).toUpperCase() + freq.slice(1)}
                 </option>
               ))}
             </select>
