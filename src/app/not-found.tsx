@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getBaseUrl } from '@/lib/utils/urlUtils';
+import { getNavigationUrl } from '@/lib/utils/urlUtils';
 
 export default function NotFound() {
   const router = useRouter();
@@ -10,7 +10,7 @@ export default function NotFound() {
   useEffect(() => {
     // Redirect to home page after a delay
     const timer = setTimeout(() => {
-      router.push(getBaseUrl());
+      router.push(getNavigationUrl(''));
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -32,7 +32,7 @@ export default function NotFound() {
         </div>
         <div className="mt-8">
           <button
-            onClick={() => router.push(getBaseUrl())}
+            onClick={() => router.push(getNavigationUrl(''))}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Go to home page

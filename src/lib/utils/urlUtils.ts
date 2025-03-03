@@ -65,4 +65,17 @@ export function getCurrentPath(): string {
   if (!basePath) return path;
   
   return path.replace(new RegExp(`^/${basePath}`), '') || '/';
+}
+
+/**
+ * Get the full URL for navigation
+ * This handles both static and dynamic routes
+ */
+export function getNavigationUrl(path: string): string {
+  const baseUrl = getBaseUrl();
+  // Remove leading slash from path if it exists
+  const cleanPath = path.replace(/^\//, '');
+  // Ensure the path ends with .html for static exports
+  const staticPath = cleanPath.endsWith('.html') ? cleanPath : `${cleanPath}.html`;
+  return `${baseUrl}/${staticPath}`;
 } 
