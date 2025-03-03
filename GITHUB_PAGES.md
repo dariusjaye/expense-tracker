@@ -1,55 +1,48 @@
 # GitHub Pages Deployment Guide
 
-This document provides instructions for deploying your Next.js application to GitHub Pages.
-
-## Prerequisites
-
-1. GitHub account
-2. Repository with your Next.js project
-3. GitHub Actions enabled on your repository
+This project is configured to be deployed to GitHub Pages using GitHub Actions. Here's how it works:
 
 ## Configuration Files
 
-The following files have been set up for GitHub Pages deployment:
+1. **Next.js Configuration** (`next.config.mjs`):
+   - `output: 'export'` - Generates static HTML files
+   - `basePath: '/expense-tracker'` - Sets the base path to match the repository name
+   - `images.unoptimized: true` - Required for static export
 
-- `.github/workflows/deploy.yml` - GitHub Actions workflow for building and deploying
-- `next.config.mjs` - Next.js configuration updated for static export
+2. **GitHub Actions Workflow** (`.github/workflows/deploy.yml`):
+   - Automatically builds and deploys the site when changes are pushed to the main branch
+   - Uses GitHub's official Pages deployment action
 
-## Setup Steps
+3. **`.nojekyll` file** (`public/.nojekyll`):
+   - Prevents GitHub Pages from processing the site with Jekyll
 
-1. **Push your code to GitHub**
-   ```bash
-   git add .
-   git commit -m "Prepare for GitHub Pages deployment"
-   git push origin main
-   ```
+## How to Deploy
 
-2. **Enable GitHub Pages**
-   - Go to your repository on GitHub
-   - Navigate to Settings > Pages
-   - Under "Source", select "GitHub Actions"
+1. Simply push your changes to the `main` branch
+2. GitHub Actions will automatically build and deploy your site
+3. You can monitor the deployment progress in the "Actions" tab of your repository
 
-3. **Update basePath in next.config.mjs**
-   - Uncomment the `basePath` line in `next.config.mjs`
-   - Set it to match your repository name: `basePath: '/your-repo-name'`
-   - Commit and push this change
+## Accessing Your Site
 
-## Deployment Process
-
-Once configured, GitHub Pages deployment will happen automatically when you push to the main branch. The GitHub Actions workflow will:
-
-1. Build your Next.js application
-2. Export it as static HTML
-3. Deploy it to GitHub Pages
+Once deployed, your site will be available at:
+https://dariusjaye.github.io/expense-tracker/
 
 ## Troubleshooting
 
-- If images don't load, ensure `unoptimized: true` is set in the Next.js config
-- For client-side routing issues, make sure to use the `Link` component from Next.js
-- If API routes don't work, remember that GitHub Pages only supports static content
+If your deployment fails:
 
-## Additional Resources
+1. Check the GitHub Actions logs in the "Actions" tab
+2. Ensure your Next.js configuration is correct
+3. Verify that all dynamic routes have `generateStaticParams()` functions
+4. Make sure all API routes are properly handled for static export
 
-- [GitHub Pages Documentation](https://docs.github.com/en/pages)
-- [Next.js Static Export](https://nextjs.org/docs/pages/building-your-application/deploying/static-exports)
-- [GitHub Actions Documentation](https://docs.github.com/en/actions) 
+## Local Testing
+
+To test the static export locally before deploying:
+
+```bash
+npm run build
+npx serve out
+```
+
+This will serve your static site locally, similar to how it will appear on GitHub Pages. 
