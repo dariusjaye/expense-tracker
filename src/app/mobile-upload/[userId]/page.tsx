@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 
+// Add dynamic export configuration
+export const dynamic = 'force-dynamic';
+
 export default function MobileUploadPage() {
   const params = useParams();
   const userId = params.userId as string;

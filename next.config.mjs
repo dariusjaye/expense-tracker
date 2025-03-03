@@ -37,8 +37,11 @@ const nextConfig = {
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    unoptimized: true, // Required for static export
   },
+  
+  // Add configuration for handling dynamic routes
+  trailingSlash: true,
+  distDir: 'out',
   
   // Disable the API rewrites as they might be causing conflicts
   // Comment out the rewrites section for now
@@ -53,8 +56,10 @@ const nextConfig = {
   },
   */
   
-  // Add experimental features to improve performance
+  // Add configuration for handling dynamic routes in static export
   experimental: {
+    appDir: true,
+    serverActions: true,
     // Optimize package imports
     optimizePackageImports: ['react', 'react-dom', 'firebase'],
   },
