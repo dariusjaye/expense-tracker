@@ -19,6 +19,10 @@ const nextConfig = {
       },
     ],
     unoptimized: true, // Required for static export
+    domains: [
+      'cdn.shopify.com',
+      'firebasestorage.googleapis.com',
+    ],
   },
   
   // Add configuration for handling dynamic routes
