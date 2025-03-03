@@ -1,38 +1,33 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Change from 'standalone' to 'export' for static hosting
   output: 'export',
-  
-  // Set basePath and assetPrefix for GitHub Pages
-  basePath: '/expense-tracker',
-  assetPrefix: '/expense-tracker/',
-  
-  // Disable React StrictMode in development to avoid double renders
-  reactStrictMode: false,
-  
-  // Configure image domains
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-    unoptimized: true, // Required for static export
+    unoptimized: true,
     domains: [
       'cdn.shopify.com',
       'firebasestorage.googleapis.com',
+      'expense-tracker-32f45.firebasestorage.app',
     ],
   },
-  
-  // Add configuration for handling dynamic routes
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  experimental: {
+    appDir: true,
+  },
   trailingSlash: true,
-  
-  // Remove experimental runtime config as it's causing issues with static export
-  experimental: {},
-
-  // Remove env config since we're hardcoding basePath
-  env: {},
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

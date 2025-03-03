@@ -1,46 +1,45 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { Metadata } from 'next';
 import { AuthProvider } from "@/lib/contexts/AuthContext";
-import { AppProvider } from "@/lib/contexts/AppContext";
 import { DeepgramProvider } from "@/lib/contexts/DeepgramContext";
-import Navigation from "@/components/Navigation";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { getBaseUrl } from "@/lib/utils/urlUtils";
+import Navigation from "@/components/Navigation";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Business Expense Tracker",
-  description: "Track and manage your business expenses with OCR receipt scanning",
+  title: "Expense Tracker",
+  description: "Track your expenses with ease",
+  metadataBase: new URL(getBaseUrl()),
 };
-
-function RootLayoutContent({ children }: { children: React.ReactNode }) {
-  return (
-    <ErrorBoundary>
-      <AuthProvider>
-        <AppProvider>
-          <DeepgramProvider>
-            <div className="app-layout">
-              <Navigation />
-              <div className="main-content">
-                {children}
-              </div>
-            </div>
-          </DeepgramProvider>
-        </AppProvider>
-      </AuthProvider>
-    </ErrorBoundary>
-  );
-}
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body>
-        <RootLayoutContent>
-          {children}
-        </RootLayoutContent>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className={inter.className}>
+        <ErrorBoundary>
+          <AuthProvider>
+            <DeepgramProvider>
+              <main className="min-h-screen bg-gray-50">
+                <Navigation />
+                <div className="main-content">
+                  {children}
+                </div>
+              </main>
+            </DeepgramProvider>
+          </AuthProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
