@@ -13,13 +13,9 @@ export async function GET() {
     }
 
     const client = shopifyClient.rest;
-    const session = shopifyClient.session.customAppSession(
-      process.env.SHOPIFY_SHOP_DOMAIN || ''
-    );
-
     const response = await client.get({
       path: 'products',
-      session,
+      query: { limit: 50 },
     });
 
     return NextResponse.json(response.body);

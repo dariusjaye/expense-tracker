@@ -1,5 +1,5 @@
-import '@shopify/shopify-api/adapters/node';
 import { shopifyApi, LATEST_API_VERSION } from '@shopify/shopify-api';
+import { restResources } from '@shopify/shopify-api/rest/admin/2024-01';
 
 export const shopifyConfig = {
   apiKey: process.env.SHOPIFY_API_KEY || '',
@@ -8,13 +8,14 @@ export const shopifyConfig = {
   hostName: process.env.SHOPIFY_APP_URL || 'localhost:3000',
   apiVersion: LATEST_API_VERSION,
   isEmbeddedApp: true,
+  restResources,
 };
 
 // Initialize Shopify API client
 export const shopifyClient = shopifyApi({
   ...shopifyConfig,
   isCustomStoreApp: false,
-  adminApiAccessToken: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN,
+  adminApiAccessToken: process.env.SHOPIFY_ACCESS_TOKEN,
 });
 
 // Helper function to check if Shopify is properly configured
@@ -22,7 +23,7 @@ export const isShopifyConfigured = () => {
   return Boolean(
     shopifyConfig.apiKey &&
     shopifyConfig.apiSecretKey &&
-    process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
+    process.env.SHOPIFY_ACCESS_TOKEN
   );
 };
 
