@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Remove dynamic export and add edge runtime
+export const runtime = 'edge';
+
 // Helper function to parse Link header for pagination
 function parseLinkHeader(linkHeader: string | null): { next?: string } {
   if (!linkHeader) return {};
@@ -50,7 +53,7 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
-    const limit = searchParams.get('limit') || '250';
+    const limit = searchParams.get('limit') || '50';
     const cursor = searchParams.get('cursor');
     const status = searchParams.get('status'); // Add status parameter for archived orders
     

@@ -4,8 +4,8 @@ const nextConfig = {
   output: 'export',
   
   // Add basePath for GitHub Pages
-  basePath: '/expense-tracker',
-  assetPrefix: '/expense-tracker/',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
   
   // Disable React StrictMode in development to avoid double renders
   reactStrictMode: false,
@@ -14,26 +14,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "placehold.co",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "replicate.com",
-      },
-      {
-        protocol: "https",
-        hostname: "replicate.delivery",
-      },
-      {
-        protocol: "https",
-        hostname: "firebasestorage.googleapis.com",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.veryfi.com",
+        protocol: 'https',
+        hostname: '**',
       },
     ],
     unoptimized: true, // Required for static export
@@ -44,7 +26,8 @@ const nextConfig = {
   
   // Add experimental features
   experimental: {
-    appDir: true,
+    // Enable static export for dynamic routes
+    runtime: 'edge',
   },
 
   // Configure static generation

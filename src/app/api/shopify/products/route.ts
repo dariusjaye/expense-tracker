@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Remove dynamic export and add edge runtime
+export const runtime = 'edge';
+
 // Helper function to parse Link header for pagination
 function parseLinkHeader(linkHeader: string | null): { next?: string } {
   if (!linkHeader) return {};
