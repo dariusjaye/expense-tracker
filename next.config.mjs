@@ -3,9 +3,9 @@ const nextConfig = {
   // Change from 'standalone' to 'export' for static hosting
   output: 'export',
   
-  // Add basePath for GitHub Pages
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  // Set basePath and assetPrefix for GitHub Pages
+  basePath: '/expense-tracker',
+  assetPrefix: '/expense-tracker/',
   
   // Disable React StrictMode in development to avoid double renders
   reactStrictMode: false,
@@ -24,16 +24,11 @@ const nextConfig = {
   // Add configuration for handling dynamic routes
   trailingSlash: true,
   
-  // Add experimental features
-  experimental: {
-    // Enable static export for dynamic routes
-    runtime: 'edge',
-  },
+  // Remove experimental runtime config as it's causing issues with static export
+  experimental: {},
 
-  // Configure static generation
-  env: {
-    NEXT_PUBLIC_BASE_PATH: '/expense-tracker',
-  },
+  // Remove env config since we're hardcoding basePath
+  env: {},
 };
 
 export default nextConfig;

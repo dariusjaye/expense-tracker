@@ -4,7 +4,7 @@
  * @returns The full URL with the base path
  */
 export function getBaseUrl(path: string): string {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const basePath = '/expense-tracker';
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${basePath}${cleanPath}`;
 }
@@ -15,7 +15,7 @@ export function getBaseUrl(path: string): string {
  * @returns The full asset URL with the base path
  */
 export function getAssetUrl(path: string): string {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const basePath = '/expense-tracker';
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${basePath}${cleanPath}`;
 } 
