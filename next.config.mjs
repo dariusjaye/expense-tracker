@@ -5,6 +5,7 @@ const nextConfig = {
   
   // Add basePath for GitHub Pages
   basePath: '/expense-tracker',
+  assetPrefix: '/expense-tracker/',
   
   // Disable React StrictMode in development to avoid double renders
   reactStrictMode: false,
